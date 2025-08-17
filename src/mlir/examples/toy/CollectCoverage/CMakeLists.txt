@@ -1,0 +1,29 @@
+# For a better template to copy, see examples/standalone
+include_directories(include)
+add_subdirectory(include)
+
+set(LLVM_LINK_COMPONENTS
+  Support
+  )
+
+add_toy_chapter(CollectCoverage
+  main.cpp
+  )
+
+include_directories(/data1/bin/onnx-mlir)
+include_directories(/data1/bin/onnx-mlir/build)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/include/)
+get_property(dialect_libs GLOBAL PROPERTY MLIR_DIALECT_LIBS)
+target_link_libraries(CollectCoverage
+  PRIVATE
+    ${dialect_libs}
+    MLIRAnalysis
+    MLIRCallInterfaces
+    MLIRCastInterfaces
+    MLIRIR
+    MLIRParser
+    MLIRPass
+    MLIRSideEffectInterfaces
+    MLIRSupport
+    MLIRTransforms)
